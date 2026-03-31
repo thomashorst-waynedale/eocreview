@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ohio Algebra 1 EOC Simulator</title>
+    <title>Ohio Algebra 1 EOC Simulator (with Desmos Guides)</title>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
     <style>
-        /* === STYLING (CSS) === */
         :root {
             --primary: #0284c7;
             --primary-hover: #0369a1;
@@ -18,12 +17,18 @@
             --card-bg: #ffffff;
             --text-main: #334155;
             --border-color: #e2e8f0;
+            --advanced: #8b5cf6;
+            --accelerated: #10b981;
+            --proficient: #3b82f6;
+            --basic: #f59e0b;
+            --limited: #ef4444;
             --desmos-color: #1a237e;
         }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: var(--bg-color); color: var(--text-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
         .simulator-container { background-color: var(--card-bg); width: 100%; max-width: 850px; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-top: 8px solid var(--primary); }
         .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; margin-bottom: 25px; }
         h1 { color: var(--primary); font-size: 22px; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .target-badge { background-color: #e0f2fe; color: var(--primary-hover); padding: 6px 12px; border-radius: 20px; font-weight: bold; font-size: 14px; }
         .progress-bar { width: 100%; height: 8px; background-color: var(--border-color); border-radius: 4px; margin-bottom: 20px; overflow: hidden; }
         .progress-fill { height: 100%; background-color: var(--primary); width: 0%; transition: width 0.3s ease; }
         .meta-info { display: flex; justify-content: space-between; color: #64748b; font-weight: 600; margin-bottom: 20px; font-size: 14px; }
@@ -32,19 +37,24 @@
         .msq-option { display: flex; align-items: center; background: #f8fafc; border: 1px solid var(--border-color); padding: 14px 18px; margin-bottom: 10px; border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 1.1rem; }
         .msq-option:hover { background: #f1f5f9; border-color: #94a3b8; }
         .msq-option input { margin-right: 15px; width: 20px; height: 20px; accent-color: var(--primary); }
-        .text-entry { font-size: 1.2rem; padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; width: 100%; max-width: 300px; }
+        .text-entry { font-size: 1.2rem; padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; width: 100%; max-width: 300px; box-sizing: border-box; }
+        .dropdown-entry { font-size: 1.1rem; padding: 6px; border: 2px solid var(--primary); border-radius: 6px; background: #f0f9ff; color: var(--text-main); font-weight: bold; margin: 0 4px; }
         .button-group { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px; }
         .btn { padding: 14px 28px; font-size: 1.05rem; border-radius: 8px; cursor: pointer; font-weight: bold; border: none; transition: 0.2s; }
         .btn-submit { background: var(--primary); color: white; }
         .btn-hint { background: #dcfce7; color: #166534; }
         .btn-desmos { background: #e8eaf6; color: var(--desmos-color); border: 1px solid #c5cae9; }
+        .btn-desmos:hover { background: #c5cae9; }
         .hint-box { margin-top: 20px; padding: 15px; border-radius: 8px; display: none; font-size: 1.05rem; line-height: 1.5; }
-        .math-hint-style { background: #f0fdf4; border-left: 5px solid #10b981; color: #166534; }
+        .math-hint-style { background: #f0fdf4; border-left: 5px solid var(--accelerated); color: #166534; }
         .desmos-hint-style { background: #f8f9fa; border-left: 5px solid var(--desmos-color); color: var(--desmos-color); }
         .feedback { margin-top: 25px; padding: 20px; border-radius: 8px; display: none; line-height: 1.6; }
         .feedback.correct { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
         .feedback.incorrect { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
-        .report-card { background: #f8fafc; border: 1px solid var(--border-color); border-radius: 12px; padding: 25px; margin-top: 20px; text-align: left;}
+        .report-card { background: #f8fafc; border: 1px solid var(--border-color); border-radius: 12px; padding: 25px; margin-top: 20px; }
+        .domain-row { margin-bottom: 15px; }
+        .domain-bar-bg { width: 100%; height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden; margin-top: 5px; }
+        .domain-bar-fill { height: 100%; background: var(--primary); transition: width 0.5s; }
     </style>
 </head>
 <body>
@@ -52,6 +62,7 @@
 <div class="simulator-container">
     <div class="header">
         <h1>Ohio EOC Algebra 1 Simulator</h1>
+        <div class="target-badge">Goal: Proficient (700+)</div>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
     <div class="meta-info"><span id="q-counter">Loading...</span><span id="q-type"></span></div>
@@ -73,25 +84,13 @@
 <script src="questions.js"></script>
 
 <script>
-    // === JAVASCRIPT LOGIC ===
-
-    // 1. State Variables (Declared only once!)
+    let currentRoundQuestions = [];
     let sessionData = {}; 
+    let currentIndex = 0;
     let score = 0;
-    const questionsPerRound = 3; // Set to 3 to match our sample questions
-    let questionsAnsweredThisRound = 0;
-    let currentQuestion = null;
-    let wasLastCorrect = false;
+    const questionsPerRound = 10; 
+    let availableQuestions = []; 
 
-    let studentState = {
-        currentStandard: "A-REI.3",
-        currentDifficulty: "Medium", 
-        answeredQuestions: [],       
-        masteryStreak: 0             
-    };
-    const difficultyTiers = ["Easy", "Medium", "Hard"];
-
-    // 2. DOM Elements
     const area = document.getElementById('interactive-area');
     const feedbackBox = document.getElementById('feedback-box');
     const hintBox = document.getElementById('hint-box');
@@ -102,118 +101,208 @@
     const nextBtn = document.getElementById('next-btn');
     const progressFill = document.getElementById('progress-fill');
 
-    // 3. Core Functions
     function renderMath() {
-        renderMathInElement(document.body, { delimiters: [{left: "$$", right: "$$", display: true}, {left: "\\(", right: "\\)", display: false}] });
+        renderMathInElement(document.body, { 
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "\\(", right: "\\)", display: false}
+            ] 
+        });
+    }
+
+    function shuffle(array) { 
+        let a = [...array];
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
     }
 
     function startNewRound() {
-        sessionData = {}; score = 0; questionsAnsweredThisRound = 0; studentState.answeredQuestions = [];
-        nextQuestionLogic();
-    }
-
-    function nextQuestionLogic() {
-        currentQuestion = getNextQuestion();
-        if (currentQuestion) {
-            updateProgress();
-            loadQuestionUI();
-        } else {
-            showFinal();
+        if (availableQuestions.length < questionsPerRound) {
+            availableQuestions = shuffle([...questionBank]);
         }
+        currentRoundQuestions = [];
+        for (let i = 0; i < questionsPerRound; i++) {
+            currentRoundQuestions.push(availableQuestions.pop());
+        }
+        sessionData = {};
+        currentIndex = 0;
+        score = 0;
+        updateProgress();
+        loadQuestion();
     }
 
-    // 4. The Brain (Adaptive Logic)
-    function getNextQuestion() {
-        // Look for exact match (Standard + Difficulty)
-        let pool = questionBank.filter(q => q.std === studentState.currentStandard && q.difficulty === studentState.currentDifficulty && !studentState.answeredQuestions.includes(q.text));
-        
-        // Fallback 1: Match Standard only
-        if (pool.length === 0) pool = questionBank.filter(q => q.std === studentState.currentStandard && !studentState.answeredQuestions.includes(q.text));
-        
-        // Fallback 2: Any unused question
-        if (pool.length === 0) pool = questionBank.filter(q => !studentState.answeredQuestions.includes(q.text));
-        
-        if (pool.length === 0) return null; // We are out of questions!
-
-        let nextQ = pool[Math.floor(Math.random() * pool.length)];
-        studentState.answeredQuestions.push(nextQ.text);
-        return nextQ;
+    function updateProgress() {
+        let percent = (currentIndex / questionsPerRound) * 100;
+        progressFill.style.width = `${percent}%`;
     }
 
-    // 5. UI Rendering
-    function loadQuestionUI() {
-        document.getElementById('q-counter').innerText = `Question ${questionsAnsweredThisRound + 1} of ${questionsPerRound}`;
-        document.getElementById('q-type').innerText = `Standard: ${currentQuestion.std} | Level: ${currentQuestion.difficulty}`;
+    function loadQuestion() {
+        const q = currentRoundQuestions[currentIndex];
+        document.getElementById('q-counter').innerText = `Question ${currentIndex + 1} of ${questionsPerRound} (Bank: ${availableQuestions.length} remaining)`;
+        document.getElementById('q-type').innerText = `Domain: ${q.domain} | Level: ${q.difficulty}`;
         
-        feedbackBox.style.display = 'none'; hintBox.style.display = 'none'; desmosBox.style.display = 'none';
-        submitBtn.style.display = 'block'; hintBtn.style.display = currentQuestion.hint ? 'block' : 'none';
-        desmosBtn.style.display = currentQuestion.desmosHint ? 'block' : 'none';
+        feedbackBox.style.display = 'none';
+        hintBox.style.display = 'none';
+        desmosBox.style.display = 'none';
+        submitBtn.style.display = 'block';
+        hintBtn.style.display = 'block';
+        desmosBtn.style.display = q.desmosHint ? 'block' : 'none';
+        submitBtn.disabled = false;
         nextBtn.style.display = 'none';
         
-        let html = "";
-        if (currentQuestion.type === 'msq') {
-            html += `<span class="q-instruction">Multiple Choice</span><div class="question-block">${currentQuestion.text}</div>`;
-            currentQuestion.options.forEach((opt, idx) => html += `<label class="msq-option"><input type="radio" name="eoc-opt" id="rad-${idx}"> <span>${opt}</span></label>`);
-        } else if (currentQuestion.type === 'sata') {
-            html += `<span class="q-instruction">Select All That Apply</span><div class="question-block">${currentQuestion.text}</div>`;
-            currentQuestion.options.forEach((opt, idx) => html += `<label class="msq-option"><input type="checkbox" id="chk-${idx}"> <span>${opt}</span></label>`);
-        } else if (currentQuestion.type === 'text') {
-            html += `<span class="q-instruction">Equation Editor</span><div class="question-block">${currentQuestion.text}</div>`;
-            html += `<input type="text" id="text-answer" class="text-entry" placeholder="Type answer..." autocomplete="off">`;
+        let htmlContent = "";
+
+        if (q.type === 'msq') {
+            htmlContent += `<span class="q-instruction">Multiple Choice</span><div class="question-block">${q.text}</div>`;
+            q.options.forEach((opt, idx) => {
+                htmlContent += `<label class="msq-option"><input type="radio" name="eoc-opt" id="rad-${idx}"> <span>${opt}</span></label>`;
+            });
+        } 
+        else if (q.type === 'sata') {
+            htmlContent += `<span class="q-instruction">Select All That Apply</span><div class="question-block">${q.text}</div>`;
+            q.options.forEach((opt, idx) => {
+                htmlContent += `<label class="msq-option"><input type="checkbox" id="chk-${idx}"> <span>${opt}</span></label>`;
+            });
+        }
+        else if (q.type === 'dropdown') {
+            htmlContent += `<span class="q-instruction">Inline Choice</span><div class="question-block">`;
+            let parts = q.text.split('[DROP]');
+            for(let i=0; i<parts.length; i++) {
+                htmlContent += parts[i];
+                if (i < parts.length - 1) {
+                    htmlContent += `<select id="dd-${i}" class="dropdown-entry"><option value="" disabled selected>...</option>`;
+                    q.options[i].forEach((optText, optIdx) => {
+                        htmlContent += `<option value="${optIdx}">${optText}</option>`;
+                    });
+                    htmlContent += `</select>`;
+                }
+            }
+            htmlContent += `</div>`;
+        }
+        else if (q.type === 'text') {
+            htmlContent += `<span class="q-instruction">Equation Editor</span><div class="question-block">${q.text}</div>`;
+            htmlContent += `<input type="text" id="text-answer" class="text-entry" placeholder="Type answer..." autocomplete="off">`;
         }
 
-        area.innerHTML = html;
+        area.innerHTML = htmlContent;
         setTimeout(renderMath, 20);
     }
 
-    function showHint() { hintBox.innerHTML = currentQuestion.hint; hintBox.style.display = 'block'; hintBtn.style.display = 'none'; setTimeout(renderMath, 10); }
-    function showDesmosHint() { desmosBox.innerHTML = currentQuestion.desmosHint; desmosBox.style.display = 'block'; desmosBtn.style.display = 'none'; setTimeout(renderMath, 10); }
+    function showHint() {
+        hintBox.innerHTML = currentRoundQuestions[currentIndex].hint;
+        hintBox.style.display = 'block';
+        hintBtn.style.display = 'none';
+        setTimeout(renderMath, 10);
+    }
 
-    // 6. Grading
+    function showDesmosHint() {
+        desmosBox.innerHTML = currentRoundQuestions[currentIndex].desmosHint;
+        desmosBox.style.display = 'block';
+        desmosBtn.style.display = 'none';
+        setTimeout(renderMath, 10);
+    }
+
     function evaluateAnswer() {
+        const q = currentRoundQuestions[currentIndex];
         let correct = false;
-        if (currentQuestion.type === 'msq') {
-            let selected = -1; currentQuestion.options.forEach((_, i) => { if(document.getElementById(`rad-${i}`).checked) selected = i; });
-            if (selected === -1) { alert("Select an answer."); return; }
-            correct = currentQuestion.correctIndices.includes(selected);
-        } else if (currentQuestion.type === 'sata') {
-            let selections = []; currentQuestion.options.forEach((_, i) => { if(document.getElementById(`chk-${i}`).checked) selections.push(i); });
-            if (selections.length === 0) { alert("Select at least one."); return; }
-            correct = (selections.length === currentQuestion.correctIndices.length) && selections.every(v => currentQuestion.correctIndices.includes(v));
-        } else if (currentQuestion.type === 'text') {
+
+        if (q.type === 'msq') {
+            let selectedIdx = -1;
+            q.options.forEach((_, i) => { if(document.getElementById(`rad-${i}`).checked) selectedIdx = i; });
+            if (selectedIdx === -1) { alert("Select an answer."); return; }
+            correct = q.correctIndices.includes(selectedIdx);
+        } 
+        else if (q.type === 'sata') {
+            let userSelections = [];
+            q.options.forEach((_, i) => { if(document.getElementById(`chk-${i}`).checked) userSelections.push(i); });
+            if (userSelections.length === 0) { alert("Select at least one."); return; }
+            correct = (userSelections.length === q.correctIndices.length) && userSelections.every(val => q.correctIndices.includes(val));
+        }
+        else if (q.type === 'dropdown') {
+            let allAnswered = true; let allCorrect = true;
+            q.options.forEach((_, i) => {
+                let sel = document.getElementById(`dd-${i}`).value;
+                if (sel === "") allAnswered = false;
+                if (parseInt(sel) !== q.correctIndices[i]) allCorrect = false;
+            });
+            if (!allAnswered) { alert("Complete all menus."); return; }
+            correct = allCorrect;
+        }
+        else if (q.type === 'text') {
             let val = document.getElementById('text-answer').value.trim().toLowerCase();
             if (val === "") { alert("Type an answer."); return; }
-            correct = val === currentQuestion.correctText.toLowerCase();
+            correct = val === q.correctText.toLowerCase();
         }
 
-        // Tracking Score
-        let domName = currentQuestion.std;
-        if (!sessionData[domName]) sessionData[domName] = { total: 0, correct: 0 };
-        sessionData[domName].total++;
-        if (correct) { sessionData[domName].correct++; score++; }
+        if (!sessionData[q.domain]) sessionData[q.domain] = { total: 0, correct: 0 };
+        sessionData[q.domain].total++;
+        if (correct) { sessionData[q.domain].correct++; score++; }
 
+        showFeedback(correct, q.explanation, q.std);
+    }
+
+    function showFeedback(correct, explanation, std) {
+        feedbackBox.style.display = 'block';
         feedbackBox.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
-        feedbackBox.innerHTML = `<strong>${correct ? "✔ Correct" : "✖ Incorrect"}</strong><br><br>${currentQuestion.explanation}`;
-        feedbackBox.style.display = 'block'; submitBtn.style.display = 'none'; hintBtn.style.display = 'none'; desmosBtn.style.display = 'none'; nextBtn.style.display = 'block';
+        feedbackBox.innerHTML = `<strong>${correct ? "✔ Correct" : "✖ Incorrect"}</strong> (Standard: ${std})<br><br>${explanation}`;
+        submitBtn.style.display = 'none';
+        hintBtn.style.display = 'none';
+        desmosBtn.style.display = 'none';
+        nextBtn.style.display = 'block';
         setTimeout(renderMath, 10);
     }
 
     function nextQuestion() {
-        questionsAnsweredThisRound++;
-        if (questionsAnsweredThisRound >= questionsPerRound) showFinal();
-        else nextQuestionLogic();
+        currentIndex++;
+        updateProgress();
+        if (currentIndex < questionsPerRound) loadQuestion();
+        else showFinal();
     }
 
-    function updateProgress() { progressFill.style.width = `${(questionsAnsweredThisRound / questionsPerRound) * 100}%`; }
-
-    // 7. Results Screen
     function showFinal() {
-        let pct = Math.round((score / questionsAnsweredThisRound) * 100);
-        area.innerHTML = `<div style="text-align:center;"><h2>Practice Complete!</h2><p>You scored ${score} out of ${questionsAnsweredThisRound} (${pct}%)</p><br><button class="btn btn-submit" onclick="startNewRound()">Start Over</button></div>`;
-        submitBtn.style.display = 'none'; hintBtn.style.display = 'none'; desmosBtn.style.display = 'none'; nextBtn.style.display = 'none'; feedbackBox.style.display = 'none';
+        let domainHTML = "";
+        for (const [dom, data] of Object.entries(sessionData)) {
+            let pct = Math.round((data.correct / data.total) * 100);
+            let barColor = pct >= 70 ? "var(--proficient)" : (pct >= 50 ? "var(--basic)" : "var(--limited)");
+            domainHTML += `
+                <div class="domain-row">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                        <strong>${dom}</strong> <span>${data.correct} / ${data.total}</span>
+                    </div>
+                    <div class="domain-bar-bg"><div class="domain-bar-fill" style="width: ${pct}%; background-color: ${barColor};"></div></div>
+                </div>`;
+        }
+
+        let tier = "", tierScore = "", color = "";
+        if (score <= 4) { tier = "Limited"; tierScore = "650 - 681"; color = "var(--limited)"; }
+        else if (score <= 6) { tier = "Basic"; tierScore = "682 - 699"; color = "var(--basic)"; }
+        else if (score <= 8) { tier = "Proficient"; tierScore = "700 - 724"; color = "var(--proficient)"; }
+        else if (score === 9) { tier = "Accelerated"; tierScore = "725 - 752"; color = "var(--accelerated)"; }
+        else { tier = "Advanced"; tierScore = "753+"; color = "var(--advanced)"; }
+
+        area.innerHTML = `
+            <div style="text-align:center;">
+                <p style="text-transform: uppercase; font-size: 0.9rem; color: #64748b; font-weight: 800;">Estimated EOC Level</p>
+                <h2 style="font-size: 42px; margin: 0; color: ${color};">${tier}</h2>
+                <p style="margin-bottom: 20px; font-size: 1.1rem; color: #64748b;">Score Range: ${tierScore}</p>
+                <div class="report-card">
+                    <h3 style="margin-top:0; border-bottom:1px solid #e2e8f0; padding-bottom:10px;">Performance by Reporting Category</h3>
+                    ${domainHTML}
+                </div>
+                <br><button class="btn btn-submit" onclick="startNewRound()">Start New Practice Test</button>
+            </div>`;
+        submitBtn.style.display = 'none';
+        hintBtn.style.display = 'none';
+        desmosBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+        feedbackBox.style.display = 'none';
+        hintBox.style.display = 'none';
+        desmosBox.style.display = 'none';
     }
 
-    // Initialize
     window.onload = startNewRound;
 </script>
 
