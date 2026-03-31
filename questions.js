@@ -145,4 +145,67 @@ const questionBank = [
     { domain: "Modeling & Reasoning", difficulty: "Medium", type: "text", std: "A-SSE.1", text: "In the expression \\( 5000(1.06)^t \\), what is the growth rate as a percentage? (Type number only)", correctText: "6", hint: "Look at the decimal past 1.00. 0.06 equals what percent?", desmosHint: null, explanation: "\\( 1.06 - 1 = 0.06 \\), which is 6%." },
     { domain: "Modeling & Reasoning", difficulty: "Hard", type: "dropdown", std: "F-IF.5", text: "A water tank drains at 5 gallons a minute. It holds 100 gallons. The volume is \\( V = 100 - 5m \\). The most reasonable domain (minutes) is from 0 to [DROP].", options: [["5", "20", "100"]], correctIndices: [1], hint: "Domain is time. When will the tank be totally empty? Set V to 0.", desmosHint: "**Desmos EOC Trick:** Graph `y = 100 - 5x`. The tank is empty when the line hits the x-axis. Click that intercept.", explanation: "\\( 0 = 100 - 5m \\rightarrow 5m = 100 \\rightarrow m = 20 \\)." },
     { domain: "Modeling & Reasoning", difficulty: "Medium", type: "msq", std: "A-REI.3", text: "A delivery driver earns $15 an hour plus $2 per delivery. If he works 4 hours, how many deliveries (d) must he make to earn AT LEAST $100?", options: ["\\( 15 + 2d \\ge 100 \\)", "\\( 60 + 2d \\ge 100 \\)", "\\( 15(4) + 2d \\le 100 \\)", "\\( 2(4) + 15d \\ge 100 \\)"], correctIndices: [1], hint: "Calculate his hourly pay first (15 * 4), then add the delivery money.", desmosHint: null, explanation: "\\( 15(4) = 60 \\). So, \\( 60 + 2d \\ge 100 \\)." }
-];
+]// --- ADAPTIVE QUIZ LOGIC ---
+
+// 1. The Student's "Save File"
+let studentState = {
+    currentStandard: "A-REI.3",  // The starting standard
+    currentDifficulty: "Medium", // Everyone starts at Medium
+    answeredQuestions: [],       // Keeps track of what they've seen
+    masteryStreak: 0             // How many Hard questions they've nailed in a row
+};
+
+const difficultyTiers = ["Easy", "Medium", "Hard"];
+
+// 2. The Question Picker
+function getNextScaffoldQuestion(wasLastCorrect) {
+    let currentTierIndex = difficultyTiers.indexOf(studentState.currentDifficulty);
+
+    // Adjust difficulty based on the last answer
+    if (wasLastCorrect) {
+        if (currentTierIndex < 2) {
+            // Move up to Medium or Hard
+            studentState.currentDifficulty = difficultyTiers[currentTierIndex + 1];
+        } else {
+            // If they are already on Hard and got it right, build the streak!
+            studentState.masteryStreak++;
+            if (studentState.masteryStreak >= 2) {
+                console.log("Standard Mastered!");
+                // Reset for the next standard (you can add logic to change standards here later)
+                studentState.currentDifficulty = "Medium"; 
+                studentState.masteryStreak = 0;            
+            }
+        }
+    } else {
+        // They got it wrong. Break the streak and drop the difficulty.
+        studentState.masteryStreak = 0; 
+        if (currentTierIndex > 0) {
+            studentState.currentDifficulty = difficultyTiers[currentTierIndex - 1];
+        }
+    }
+
+    // Filter our beautiful questionBank for the right standard and new difficulty
+    let availableQuestions = questionBank.filter(q => 
+        q.std === studentState.currentStandard && 
+        q.difficulty === studentState.currentDifficulty &&
+        !studentState.answeredQuestions.includes(q.text) 
+    );
+
+    // Safety net: If we run out of questions for that difficulty, just grab ANY unused question for that standard
+    if (availableQuestions.length === 0) {
+        availableQuestions = questionBank.filter(q => 
+            q.std === studentState.currentStandard &&
+            !studentState.answeredQuestions.includes(q.text)
+        );
+    }
+
+    // Pick a random question from the available list
+    let nextQuestion = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+    
+    // Log it so they don't see it again
+    if (nextQuestion) {
+        studentState.answeredQuestions.push(nextQuestion.text);
+    }
+
+    return nextQuestion; // Send this back to your UI!
+};
