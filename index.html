@@ -130,7 +130,15 @@
         
         currentQuestion = getNextScaffoldQuestion(false); 
         updateProgress();
-        loadQuestion();
+        
+        if (currentQuestion) {
+            loadQuestion();
+        } else {
+            // Failsafe in case questionBank is empty on load
+            area.innerHTML = "<p>Error: No questions found in questionBank. Please check questions.js.</p>";
+            submitBtn.style.display = 'none';
+            hintBtn.style.display = 'none';
+        }
     }
 
     function updateProgress() {
@@ -161,17 +169,32 @@
             }
         }
 
+        // 1. Try to find a question that matches both the Standard AND Difficulty
         let availableQuestions = questionBank.filter(q => 
             q.std === studentState.currentStandard && 
             q.difficulty === studentState.currentDifficulty &&
             !studentState.answeredQuestions.includes(q.text) 
         );
 
+        // 2. Fallback: If out of that difficulty, just match the Standard
         if (availableQuestions.length === 0) {
             availableQuestions = questionBank.filter(q => 
                 q.std === studentState.currentStandard &&
                 !studentState.answeredQuestions.includes(q.text)
             );
+        }
+
+        // 3. NEW FALLBACK: If out of questions for that specific standard, pick ANY unused question!
+        if (availableQuestions.length === 0) {
+            availableQuestions = questionBank.filter(q => 
+                !studentState.answeredQuestions.includes(q.text)
+            );
+        }
+
+        // 4. If we are completely out of questions in the whole bank, stop gracefully.
+        if (availableQuestions.length === 0) {
+            console.warn("Question bank is completely empty!");
+            return null;
         }
 
         let nextQ = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
