@@ -256,10 +256,35 @@
     }
 
     function nextQuestion() {
-        currentIndex++;
-        updateProgress();
-        if (currentIndex < questionsPerRound) loadQuestion();
-        else showFinal();
+        // Example of how your Submit button should look now:
+
+document.getElementById("submit-btn").addEventListener("click", () => {
+    
+    // 1. Figure out if they got it right based on our question type
+    let isCorrect = false;
+    let currentQ = questionBank[currentIndex]; // Or however you currently store the active question
+
+    if (currentQ.type === "text") {
+        let studentInput = document.getElementById("text-input").value.trim();
+        isCorrect = (studentInput === currentQ.correctText);
+    } 
+    else if (currentQ.type === "msq" || currentQ.type === "sata") {
+        // (Your logic here that checks if the checked boxes match currentQ.correctIndices)
+        isCorrect = checkCheckboxes(currentQ.correctIndices); 
+    }
+    // ... same for dropdowns ...
+
+    // 2. Feed that true/false into the Adaptive Brain!
+    let newQuestionToDisplay = getNextScaffoldQuestion(isCorrect);
+
+    // 3. Render the new question
+    if (newQuestionToDisplay) {
+        renderQuestion(newQuestionToDisplay); 
+    } else {
+        // If it returns undefined, they've answered literally everything. Show the results screen!
+        showFinalResults(); 
+    }
+});
     }
 
     function showFinal() {
