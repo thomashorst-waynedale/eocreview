@@ -84,13 +84,24 @@
 <script src="questions.js"></script>
 
 <script>
-    let currentRoundQuestions = [];
+    // --- 1. THE DATA & ADAPTIVE STATE ---
     let sessionData = {}; 
-    let currentIndex = 0;
     let score = 0;
     const questionsPerRound = 10; 
-    let availableQuestions = []; 
+    let questionsAnsweredThisRound = 0;
+    let currentQuestion = null;
+    let wasLastCorrect = false;
 
+    // The Adaptive Brain's State
+    let studentState = {
+        currentStandard: "A-REI.3",  // Make sure this matches a standard in your bank!
+        currentDifficulty: "Medium", 
+        answeredQuestions: [],       
+        masteryStreak: 0             
+    };
+    const difficultyTiers = ["Easy", "Medium", "Hard"];
+
+    // --- DOM ELEMENTS ---
     const area = document.getElementById('interactive-area');
     const feedbackBox = document.getElementById('feedback-box');
     const hintBox = document.getElementById('hint-box');
@@ -101,6 +112,7 @@
     const nextBtn = document.getElementById('next-btn');
     const progressFill = document.getElementById('progress-fill');
 
+    // --- 2. SETUP FUNCTIONS ---
     function renderMath() {
         renderMathInElement(document.body, { 
             delimiters: [
@@ -110,71 +122,102 @@
         });
     }
 
-    function shuffle(array) { 
-        let a = [...array];
-        for (let i = a.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [a[i], a[j]] = [a[j], a[i]];
-        }
-        return a;
-    }
-
     function startNewRound() {
-        if (availableQuestions.length < questionsPerRound) {
-            availableQuestions = shuffle([...questionBank]);
-        }
-        currentRoundQuestions = [];
-        for (let i = 0; i < questionsPerRound; i++) {
-            currentRoundQuestions.push(availableQuestions.pop());
-        }
         sessionData = {};
-        currentIndex = 0;
         score = 0;
+        questionsAnsweredThisRound = 0;
+        studentState.answeredQuestions = []; 
+        
+        currentQuestion = getNextScaffoldQuestion(false); 
         updateProgress();
         loadQuestion();
     }
 
     function updateProgress() {
-        let percent = (currentIndex / questionsPerRound) * 100;
+        let percent = (questionsAnsweredThisRound / questionsPerRound) * 100;
         progressFill.style.width = `${percent}%`;
     }
 
+    // --- 3. THE ADAPTIVE BRAIN ---
+    function getNextScaffoldQuestion(lastAnswerWasRight) {
+        if (questionsAnsweredThisRound > 0) {
+            let currentTierIndex = difficultyTiers.indexOf(studentState.currentDifficulty);
+
+            if (lastAnswerWasRight) {
+                if (currentTierIndex < 2) {
+                    studentState.currentDifficulty = difficultyTiers[currentTierIndex + 1];
+                } else {
+                    studentState.masteryStreak++;
+                    if (studentState.masteryStreak >= 2) {
+                        studentState.currentDifficulty = "Medium"; 
+                        studentState.masteryStreak = 0;            
+                    }
+                }
+            } else {
+                studentState.masteryStreak = 0; 
+                if (currentTierIndex > 0) {
+                    studentState.currentDifficulty = difficultyTiers[currentTierIndex - 1];
+                }
+            }
+        }
+
+        let availableQuestions = questionBank.filter(q => 
+            q.std === studentState.currentStandard && 
+            q.difficulty === studentState.currentDifficulty &&
+            !studentState.answeredQuestions.includes(q.text) 
+        );
+
+        if (availableQuestions.length === 0) {
+            availableQuestions = questionBank.filter(q => 
+                q.std === studentState.currentStandard &&
+                !studentState.answeredQuestions.includes(q.text)
+            );
+        }
+
+        let nextQ = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+        
+        if (nextQ) {
+            studentState.answeredQuestions.push(nextQ.text);
+        }
+        return nextQ;
+    }
+
+    // --- 4. UI: RENDER QUESTION ---
     function loadQuestion() {
-        const q = currentRoundQuestions[currentIndex];
-        document.getElementById('q-counter').innerText = `Question ${currentIndex + 1} of ${questionsPerRound} (Bank: ${availableQuestions.length} remaining)`;
-        document.getElementById('q-type').innerText = `Domain: ${q.domain} | Level: ${q.difficulty}`;
+        document.getElementById('q-counter').innerText = `Question ${questionsAnsweredThisRound + 1} of ${questionsPerRound}`;
+        document.getElementById('q-type').innerText = `Standard: ${currentQuestion.std} | Level: ${currentQuestion.difficulty}`;
         
         feedbackBox.style.display = 'none';
         hintBox.style.display = 'none';
         desmosBox.style.display = 'none';
         submitBtn.style.display = 'block';
         hintBtn.style.display = 'block';
-        desmosBtn.style.display = q.desmosHint ? 'block' : 'none';
+        desmosBtn.style.display = currentQuestion.desmosHint ? 'block' : 'none';
         submitBtn.disabled = false;
         nextBtn.style.display = 'none';
         
         let htmlContent = "";
 
-        if (q.type === 'msq') {
-            htmlContent += `<span class="q-instruction">Multiple Choice</span><div class="question-block">${q.text}</div>`;
-            q.options.forEach((opt, idx) => {
+        if (currentQuestion.type === 'msq') {
+            htmlContent += `<span class="q-instruction">Multiple Choice</span><div class="question-block">${currentQuestion.text}</div>`;
+            currentQuestion.options.forEach((opt, idx) => {
                 htmlContent += `<label class="msq-option"><input type="radio" name="eoc-opt" id="rad-${idx}"> <span>${opt}</span></label>`;
             });
         } 
-        else if (q.type === 'sata') {
-            htmlContent += `<span class="q-instruction">Select All That Apply</span><div class="question-block">${q.text}</div>`;
-            q.options.forEach((opt, idx) => {
+        else if (currentQuestion.type === 'sata') {
+            htmlContent += `<span class="q-instruction">Select All That Apply</span><div class="question-block">${currentQuestion.text}</div>`;
+            currentQuestion.options.forEach((opt, idx) => {
                 htmlContent += `<label class="msq-option"><input type="checkbox" id="chk-${idx}"> <span>${opt}</span></label>`;
             });
         }
-        else if (q.type === 'dropdown') {
+        else if (currentQuestion.type === 'dropdown') {
             htmlContent += `<span class="q-instruction">Inline Choice</span><div class="question-block">`;
-            let parts = q.text.split('[DROP]');
+            let parts = currentQuestion.text.split('[DROP]');
             for(let i=0; i<parts.length; i++) {
                 htmlContent += parts[i];
                 if (i < parts.length - 1) {
                     htmlContent += `<select id="dd-${i}" class="dropdown-entry"><option value="" disabled selected>...</option>`;
-                    q.options[i].forEach((optText, optIdx) => {
+                    currentQuestion.options[i].forEach((optText, optIdx) => {
                         htmlContent += `<option value="${optIdx}">${optText}</option>`;
                     });
                     htmlContent += `</select>`;
@@ -182,8 +225,8 @@
             }
             htmlContent += `</div>`;
         }
-        else if (q.type === 'text') {
-            htmlContent += `<span class="q-instruction">Equation Editor</span><div class="question-block">${q.text}</div>`;
+        else if (currentQuestion.type === 'text') {
+            htmlContent += `<span class="q-instruction">Equation Editor</span><div class="question-block">${currentQuestion.text}</div>`;
             htmlContent += `<input type="text" id="text-answer" class="text-entry" placeholder="Type answer..." autocomplete="off">`;
         }
 
@@ -191,57 +234,61 @@
         setTimeout(renderMath, 20);
     }
 
+    // --- 5. UI: HINTS ---
     function showHint() {
-        hintBox.innerHTML = currentRoundQuestions[currentIndex].hint;
+        hintBox.innerHTML = currentQuestion.hint;
         hintBox.style.display = 'block';
         hintBtn.style.display = 'none';
         setTimeout(renderMath, 10);
     }
 
     function showDesmosHint() {
-        desmosBox.innerHTML = currentRoundQuestions[currentIndex].desmosHint;
+        desmosBox.innerHTML = currentQuestion.desmosHint;
         desmosBox.style.display = 'block';
         desmosBtn.style.display = 'none';
         setTimeout(renderMath, 10);
     }
 
+    // --- 6. LOGIC: EVALUATE & NEXT ---
     function evaluateAnswer() {
-        const q = currentRoundQuestions[currentIndex];
         let correct = false;
 
-        if (q.type === 'msq') {
+        if (currentQuestion.type === 'msq') {
             let selectedIdx = -1;
-            q.options.forEach((_, i) => { if(document.getElementById(`rad-${i}`).checked) selectedIdx = i; });
+            currentQuestion.options.forEach((_, i) => { if(document.getElementById(`rad-${i}`).checked) selectedIdx = i; });
             if (selectedIdx === -1) { alert("Select an answer."); return; }
-            correct = q.correctIndices.includes(selectedIdx);
+            correct = currentQuestion.correctIndices.includes(selectedIdx);
         } 
-        else if (q.type === 'sata') {
+        else if (currentQuestion.type === 'sata') {
             let userSelections = [];
-            q.options.forEach((_, i) => { if(document.getElementById(`chk-${i}`).checked) userSelections.push(i); });
+            currentQuestion.options.forEach((_, i) => { if(document.getElementById(`chk-${i}`).checked) userSelections.push(i); });
             if (userSelections.length === 0) { alert("Select at least one."); return; }
-            correct = (userSelections.length === q.correctIndices.length) && userSelections.every(val => q.correctIndices.includes(val));
+            correct = (userSelections.length === currentQuestion.correctIndices.length) && userSelections.every(val => currentQuestion.correctIndices.includes(val));
         }
-        else if (q.type === 'dropdown') {
+        else if (currentQuestion.type === 'dropdown') {
             let allAnswered = true; let allCorrect = true;
-            q.options.forEach((_, i) => {
+            currentQuestion.options.forEach((_, i) => {
                 let sel = document.getElementById(`dd-${i}`).value;
                 if (sel === "") allAnswered = false;
-                if (parseInt(sel) !== q.correctIndices[i]) allCorrect = false;
+                if (parseInt(sel) !== currentQuestion.correctIndices[i]) allCorrect = false;
             });
             if (!allAnswered) { alert("Complete all menus."); return; }
             correct = allCorrect;
         }
-        else if (q.type === 'text') {
+        else if (currentQuestion.type === 'text') {
             let val = document.getElementById('text-answer').value.trim().toLowerCase();
             if (val === "") { alert("Type an answer."); return; }
-            correct = val === q.correctText.toLowerCase();
+            correct = val === currentQuestion.correctText.toLowerCase();
         }
 
-        if (!sessionData[q.domain]) sessionData[q.domain] = { total: 0, correct: 0 };
-        sessionData[q.domain].total++;
-        if (correct) { sessionData[q.domain].correct++; score++; }
+        let domName = currentQuestion.domain || currentQuestion.std;
+        if (!sessionData[domName]) sessionData[domName] = { total: 0, correct: 0 };
+        sessionData[domName].total++;
+        if (correct) { sessionData[domName].correct++; score++; }
 
-        showFeedback(correct, q.explanation, q.std);
+        wasLastCorrect = correct; 
+        
+        showFeedback(correct, currentQuestion.explanation, currentQuestion.std);
     }
 
     function showFeedback(correct, explanation, std) {
@@ -251,42 +298,28 @@
         submitBtn.style.display = 'none';
         hintBtn.style.display = 'none';
         desmosBtn.style.display = 'none';
-        nextBtn.style.display = 'block';
+        nextBtn.style.display = 'block'; 
         setTimeout(renderMath, 10);
     }
 
     function nextQuestion() {
-        // Example of how your Submit button should look now:
+        questionsAnsweredThisRound++;
+        updateProgress();
 
-document.getElementById("submit-btn").addEventListener("click", () => {
-    
-    // 1. Figure out if they got it right based on our question type
-    let isCorrect = false;
-    let currentQ = questionBank[currentIndex]; // Or however you currently store the active question
-
-    if (currentQ.type === "text") {
-        let studentInput = document.getElementById("text-input").value.trim();
-        isCorrect = (studentInput === currentQ.correctText);
-    } 
-    else if (currentQ.type === "msq" || currentQ.type === "sata") {
-        // (Your logic here that checks if the checked boxes match currentQ.correctIndices)
-        isCorrect = checkCheckboxes(currentQ.correctIndices); 
-    }
-    // ... same for dropdowns ...
-
-    // 2. Feed that true/false into the Adaptive Brain!
-    let newQuestionToDisplay = getNextScaffoldQuestion(isCorrect);
-
-    // 3. Render the new question
-    if (newQuestionToDisplay) {
-        renderQuestion(newQuestionToDisplay); 
-    } else {
-        // If it returns undefined, they've answered literally everything. Show the results screen!
-        showFinalResults(); 
-    }
-});
+        if (questionsAnsweredThisRound >= questionsPerRound) {
+            showFinal();
+        } else {
+            currentQuestion = getNextScaffoldQuestion(wasLastCorrect);
+            
+            if (currentQuestion) {
+                loadQuestion();
+            } else {
+                showFinal(); 
+            }
+        }
     }
 
+    // --- 7. FINAL RESULTS ---
     function showFinal() {
         let domainHTML = "";
         for (const [dom, data] of Object.entries(sessionData)) {
@@ -326,8 +359,10 @@ document.getElementById("submit-btn").addEventListener("click", () => {
         feedbackBox.style.display = 'none';
         hintBox.style.display = 'none';
         desmosBox.style.display = 'none';
+        progressFill.style.width = '100%';
     }
 
+    // --- START ---
     window.onload = startNewRound;
 </script>
 
