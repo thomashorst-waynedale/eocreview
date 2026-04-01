@@ -388,7 +388,7 @@ const questionBank = [
         hint: "Look at the numbers in the parentheses. 10 was the original price. 200 was the original attendance.", 
         desmosHint: null, 
         explanation: "Revenue is calculated by multiplying (Price) times (Quantity). \\( 10 + x \\) modifies the original $10 price, and \\( 200 - 10x \\) modifies the original 200 attendees." 
-    }
+    },
     // --- EOC "WALL OF TEXT" & DATA CHART SIMULATIONS ---
 
     { 
