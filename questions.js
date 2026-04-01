@@ -144,7 +144,208 @@ const questionBank = [
     { domain: "Modeling & Reasoning", difficulty: "Medium", type: "msq", std: "F-BF.1", text: "You deposit $100 in a jar. Every week you add $20. Which explicit formula finds the total money \\( M \\) after \\( w \\) weeks?", options: ["\\( M = 100w + 20 \\)", "\\( M = 20(100)^w \\)", "\\( M = 20w + 100 \\)", "\\( M = 100(1.2)^w \\)"], correctIndices: [2], hint: "Adding a set amount is linear. Rate is slope, start is y-intercept.", desmosHint: null, explanation: "Starts at 100 (y-intercept) and grows by 20 per week (slope)." },
     { domain: "Modeling & Reasoning", difficulty: "Medium", type: "text", std: "A-SSE.1", text: "In the expression \\( 5000(1.06)^t \\), what is the growth rate as a percentage? (Type number only)", correctText: "6", hint: "Look at the decimal past 1.00. 0.06 equals what percent?", desmosHint: null, explanation: "\\( 1.06 - 1 = 0.06 \\), which is 6%." },
     { domain: "Modeling & Reasoning", difficulty: "Hard", type: "dropdown", std: "F-IF.5", text: "A water tank drains at 5 gallons a minute. It holds 100 gallons. The volume is \\( V = 100 - 5m \\). The most reasonable domain (minutes) is from 0 to [DROP].", options: [["5", "20", "100"]], correctIndices: [1], hint: "Domain is time. When will the tank be totally empty? Set V to 0.", desmosHint: "**Desmos EOC Trick:** Graph `y = 100 - 5x`. The tank is empty when the line hits the x-axis. Click that intercept.", explanation: "\\( 0 = 100 - 5m \\rightarrow 5m = 100 \\rightarrow m = 20 \\)." },
-    { domain: "Modeling & Reasoning", difficulty: "Medium", type: "msq", std: "A-REI.3", text: "A delivery driver earns $15 an hour plus $2 per delivery. If he works 4 hours, how many deliveries (d) must he make to earn AT LEAST $100?", options: ["\\( 15 + 2d \\ge 100 \\)", "\\( 60 + 2d \\ge 100 \\)", "\\( 15(4) + 2d \\le 100 \\)", "\\( 2(4) + 15d \\ge 100 \\)"], correctIndices: [1], hint: "Calculate his hourly pay first (15 * 4), then add the delivery money.", desmosHint: null, explanation: "\\( 15(4) = 60 \\). So, \\( 60 + 2d \\ge 100 \\)." }
+    { domain: "Modeling & Reasoning", difficulty: "Medium", type: "msq", std: "A-REI.3", text: "A delivery driver earns $15 an hour plus $2 per delivery. If he works 4 hours, how many deliveries (d) must he make to earn AT LEAST $100?", options: ["\\( 15 + 2d \\ge 100 \\)", "\\( 60 + 2d \\ge 100 \\)", "\\( 15(4) + 2d \\le 100 \\)", "\\( 2(4) + 15d \\ge 100 \\)"], correctIndices: [1], hint: "Calculate his hourly pay first (15 * 4), then add the delivery money.", desmosHint: null, explanation: "\\( 15(4) = 60 \\). So, \\( 60 + 2d \\ge 100 \\)." },
+    // --- QUADRATIC WORD PROBLEMS (Dropdowns) ---
+    { 
+        domain: "Functions", 
+        difficulty: "Hard", 
+        type: "dropdown", 
+        std: "F-IF.4", 
+        text: "A toy rocket is launched from a platform. Its height in feet after \\( t \\) seconds is modeled by \\( h(t) = -16t^2 + 64t + 80 \\). The rocket reaches its maximum height at [DROP] seconds, and that maximum height is [DROP] feet.", 
+        options: [["2", "4", "5"], ["80", "128", "144"]], 
+        correctIndices: [0, 2], 
+        hint: "To find the maximum, you need the vertex. The x-coordinate of the vertex is \\( -b / (2a) \\). Plug that time back into the equation to find the height.", 
+        desmosHint: "**Desmos EOC Trick:** Change 't' to 'x'. Graph `y = -16x^2 + 64x + 80`. Click the very top point of the parabola (the vertex). The x-coordinate is the time, and the y-coordinate is the maximum height!", 
+        explanation: "The vertex time is \\( -64 / (2(-16)) = -64 / -32 = 2 \\) seconds. Plugging 2 back in: \\( -16(2)^2 + 64(2) + 80 \\) becomes \\( -64 + 128 + 80 = 144 \\) feet." 
+    },
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Medium", 
+        type: "dropdown", 
+        std: "A-CED.1", 
+        text: "A rectangular garden has a length that is 4 feet longer than its width, \\( w \\). The total area is 60 square feet. This is modeled by \\( w(w + 4) = 60 \\), which factors to \\( (w + 10)(w - 6) = 0 \\). In this real-world context, the valid width is [DROP] feet and the length is [DROP] feet.", 
+        options: [["-10", "6", "10"], ["6", "10", "14"]], 
+        correctIndices: [1, 1], 
+        hint: "Solving the factored equation gives \\( w = -10 \\) and \\( w = 6 \\). Can a garden have a negative width?", 
+        desmosHint: "**Desmos EOC Trick:** Graph `y = (x + 10)(x - 6)`. The positive x-intercept is your valid width. Add 4 to get your length.", 
+        explanation: "Lengths must be positive, so the width \\( w \\) must be 6. The length is 4 feet longer than the width, so \\( 6 + 4 = 10 \\)." 
+    },
+    { 
+        domain: "Functions", 
+        difficulty: "Medium", 
+        type: "dropdown", 
+        std: "F-IF.8a", 
+        text: "A company's daily profit is modeled by \\( P(x) = -2x^2 + 400x - 5000 \\), where \\( x \\) is the number of items sold. To find the maximum profit, the company needs to find the [DROP] of the parabola. They must sell [DROP] items to maximize their profit.", 
+        options: [["x-intercepts", "y-intercept", "vertex"], ["100", "200", "400"]], 
+        correctIndices: [2, 0], 
+        hint: "The maximum or minimum of any quadratic function is located at the top or bottom of the curve.", 
+        desmosHint: "**Desmos EOC Trick:** Graph the profit equation. You will have to zoom out A LOT to see the top of the curve. Click the peak. The x-value tells you the number of items, the y-value is the actual money made.", 
+        explanation: "Maximums occur at the vertex. The x-coordinate is \\( -b / (2a) = -400 / (2(-2)) = -400 / -4 = 100 \\). They must sell 100 items." 
+    },
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Easy", 
+        type: "dropdown", 
+        std: "A-REI.4b", 
+        text: "A water balloon is dropped from a window 144 feet above the ground. The height is modeled by \\( h(t) = -16t^2 + 144 \\). The balloon will hit the ground when \\( h(t) \\) equals [DROP]. This happens after exactly [DROP] seconds.", 
+        options: [["0", "144", "-16"], ["3", "4", "9"]], 
+        correctIndices: [0, 0], 
+        hint: "Ground level means the height is zero. Set the equation to zero and solve for t.", 
+        desmosHint: "**Desmos EOC Trick:** Graph `y = -16x^2 + 144`. The ground is the x-axis. Click the positive x-intercept to find out when it hits.", 
+        explanation: "Set \\( h(t) = 0 \\). \\( 0 = -16t^2 + 144 \\). Subtract 144, then divide by -16 to get \\( t^2 = 9 \\). The square root of 9 is 3." 
+    },
+    { 
+        domain: "Functions", 
+        difficulty: "Hard", 
+        type: "dropdown", 
+        std: "F-BF.1b", 
+        text: "A theater charges $10 per ticket and sells 200 tickets. For every $1 increase in price (\\( x \\)), they sell 10 fewer tickets. The revenue function is \\( R(x) = (10 + x)(200 - 10x) \\). The expression \\( (10 + x) \\) represents the new [DROP], while \\( (200 - 10x) \\) represents the new [DROP].", 
+        options: [["ticket price", "number of tickets", "total revenue"], ["ticket price", "number of tickets", "total revenue"]], 
+        correctIndices: [0, 1], 
+        hint: "Look at the numbers in the parentheses. 10 was the original price. 200 was the original attendance.", 
+        desmosHint: "", 
+        explanation: "Revenue is calculated by multiplying (Price) times (Quantity). \\( 10 + x \\) modifies the original $10 price, and \\( 200 - 10x \\) modifies the original 200 attendees." 
+    },
+    // --- EOC "WALL OF TEXT" & DATA CHART SIMULATIONS ---
+    { 
+        domain: "Modeling & Reasoning", 
+        difficulty: "Medium", 
+        type: "msq", 
+        std: "F-LE.5", 
+        text: "In 2015, a team of marine biologists set up a research station on a remote island. They began tracking the local sea turtle population, which was severely endangered. After planting 400 tracking microchips, they determined that the population could be modeled by the function \\( P(t) = 150(1.08)^t \\), where \\( t \\) is the number of years since the study began. What does the value 150 represent in this context?", 
+        options: [
+            "The number of microchips planted.", 
+            "The initial sea turtle population when the study began.", 
+            "The number of turtles added to the population each year.", 
+            "The target population goal for the biologists."
+        ], 
+        correctIndices: [1], 
+        hint: "Ignore the extra numbers in the story. In the formula \\( y = a(b)^x \\), what does the 'a' value always represent?", 
+        desmosHint: "**Desmos EOC Trick:** Graph the equation (change t to x). Click the y-intercept (where time x = 0). The y-value is 150, meaning at year 0, there were 150 turtles.", 
+        explanation: "The EOC loves to throw in extra numbers (like 2015 and 400 chips) to confuse you. In an exponential function, the coefficient in front (150) is always the starting amount." 
+    },
+    { 
+        domain: "Functions", 
+        difficulty: "Hard", 
+        type: "dropdown", 
+        std: "F-IF.4", 
+        text: "The city of Columbus is building a new suspension bridge over the Scioto River. The bridge will span 1,200 feet across the water and require over 4,000 tons of steel. The main suspension cable hangs in a parabolic shape, and its height in feet above the water can be modeled by the equation \\( h(x) = 0.02(x - 50)^2 + 15 \\), where \\( x \\) is the distance in feet from the left support pillar. <br><br>The minimum height of the cable is [DROP] feet above the water, and this occurs [DROP] feet away from the left support pillar.", 
+        options: [["0.02", "15", "50", "1200"], ["15", "50", "1200", "4000"]], 
+        correctIndices: [1, 1], 
+        hint: "This is a vertex form equation: \\( a(x - h)^2 + k \\). The vertex \\( (h, k) \\) tells you the minimum point.", 
+        desmosHint: "**Desmos EOC Trick:** Graph the equation. Click the very lowest point of the U-shape. The x-value is the distance, and the y-value is the height!", 
+        explanation: "Ignore the 1,200 feet and 4,000 tons. The vertex of the equation is (50, 15). The x-value (distance) is 50, and the y-value (height) is 15." 
+    },
+    { 
+        domain: "Statistics", 
+        difficulty: "Medium", 
+        type: "msq", 
+        std: "S-ID.1", 
+        text: "A local movie theater manager collected data on the ages of people attending a Friday night premiere. Instead of a histogram, the data is represented in the frequency table below:<br><br><table style='width:100%; text-align:center; border-collapse: collapse; margin-top: 10px;' border='1'><tr><th style='padding: 5px; background: #f1f5f9;'>Age Group</th><th style='padding: 5px; background: #f1f5f9;'>Frequency (Number of People)</th></tr><tr><td>10 - 19</td><td>5</td></tr><tr><td>20 - 29</td><td>12</td></tr><tr><td>30 - 39</td><td>8</td></tr><tr><td>40 - 49</td><td>4</td></tr></table><br>Based on the table, which age interval contains the median age of the moviegoers?", 
+        options: ["10 - 19", "20 - 29", "30 - 39", "40 - 49"], 
+        correctIndices: [1], 
+        hint: "First, find the total number of people. Then, figure out which 'person' is exactly in the middle.", 
+        desmosHint: "", 
+        explanation: "Total people = 5 + 12 + 8 + 4 = 29. The median is the 15th person (14 below, 14 above). The first interval holds people 1-5. The second interval holds people 6-17. Therefore, the 15th person falls in the 20-29 interval." 
+    },
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Medium", 
+        type: "text", 
+        std: "A-CED.4", 
+        text: "In a physics class, students are studying the kinematics of a 50-kilogram prototype rocket. The final velocity of the rocket, \\( v \\), after its engines fire can be calculated using the formula \\( v = u + at \\), where \\( u \\) is the initial velocity, \\( a \\) is the acceleration, and \\( t \\) is the time in seconds. If the final velocity is 120 m/s, the initial velocity was 20 m/s, and the time was 5 seconds, what was the acceleration (\\( a \\))? (Type number only)", 
+        correctText: "20", 
+        hint: "Ignore the rocket's weight. Plug the numbers into \\( 120 = 20 + a(5) \\) and solve for a.", 
+        desmosHint: "**Desmos EOC Trick:** Type `120 = 20 + 5x` into Desmos. Look at the vertical line it graphs and click the x-intercept.", 
+        explanation: "\\( 120 = 20 + 5a \\). Subtract 20: \\( 100 = 5a \\). Divide by 5: \\( a = 20 \\)." 
+    },
+    { 
+        domain: "Statistics", 
+        difficulty: "Hard", 
+        type: "dropdown", 
+        std: "S-ID.1", 
+        text: "A meteorologist recorded the high temperatures (in degrees Fahrenheit) for a city over a 30-day period. A software program generated the following Five-Number Summary for a box plot:<br><br><b>Minimum:</b> 42<br><b>Q1 (Lower Quartile):</b> 51<br><b>Median:</b> 60<br><b>Q3 (Upper Quartile):</b> 72<br><b>Maximum:</b> 88<br><br>The Interquartile Range (IQR) of the temperatures is [DROP] degrees. This means that the middle 50% of the temperatures varied by [DROP] degrees.", 
+        options: [["9", "21", "30", "46"], ["9", "21", "30", "46"]], 
+        correctIndices: [1, 1], 
+        hint: "The IQR is the distance between Q3 and Q1. It represents the 'box' part of a box-and-whisker plot.", 
+        desmosHint: "**Desmos EOC Trick:** Just use the calculator: type `72 - 51`.", 
+        explanation: "IQR = Q3 - Q1. \\( 72 - 51 = 21 \\). The IQR literally represents the spread of the middle 50% of the data." 
+    },
+    { 
+        domain: "Modeling & Reasoning", 
+        difficulty: "Easy", 
+        type: "msq", 
+        std: "A-CED.3", 
+        text: "The student council is hosting a bake sale to raise money for a spring field trip. They spent $45 on ingredients and supplies. They are selling chocolate chip cookies for $1.50 each and brownies for $2.00 each. The school principal donated an extra $20 to their fund. Which inequality represents the number of cookies (\\( c \\)) and brownies (\\( b \\)) they must sell to make a total profit of at least $100?", 
+        options: [
+            "\\( 1.50c + 2.00b - 45 + 20 \\ge 100 \\)", 
+            "\\( 1.50c + 2.00b + 45 - 20 \\ge 100 \\)", 
+            "\\( 3.50cb - 25 \\ge 100 \\)", 
+            "\\( 1.50c + 2.00b \\ge 100 \\)"
+        ], 
+        correctIndices: [0], 
+        hint: "Profit is Money In minus Money Out. They earn money from cookies, brownies, and the donation. They lost money on supplies.", 
+        desmosHint: "", 
+        explanation: "Money earned is \\( 1.50c + 2.00b \\). They spent $45 (so subtract 45). They were given $20 (so add 20). The total must be \\( \\ge 100 \\)." 
+    },
+    { 
+        domain: "Statistics", 
+        difficulty: "Medium", 
+        type: "msq", 
+        std: "S-ID.8", 
+        text: "A researcher analyzes the relationship between the number of hours students spend studying for a standardized test and their final scores. A graphing calculator outputs a correlation coefficient of \\( r = 0.89 \\). Which statement best describes this relationship?", 
+        options: [
+            "There is a strong positive correlation, meaning as study time increases, test scores tend to increase.", 
+            "There is a weak positive correlation, meaning studying has little effect on test scores.", 
+            "There is a strong negative correlation, meaning as study time increases, test scores tend to decrease.", 
+            "Studying for the test causes the score to increase by exactly 89%."
+        ], 
+        correctIndices: [0], 
+        hint: "The closer the r-value is to 1 or -1, the stronger the relationship. The sign (+ or -) tells you the direction.", 
+        desmosHint: "", 
+        explanation: "An \\( r \\) value of 0.89 is very close to 1, indicating a strong positive correlation. Remember that correlation does not imply absolute causation, and the value 0.89 does not represent a percentage increase." 
+    },
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Medium", 
+        type: "dropdown", 
+        std: "A-REI.10", 
+        text: "During a chemistry experiment, a liquid is heated to 85°C. When removed from the heat, the temperature of the liquid drops at a constant rate of 4.5°C per minute. The equation modeling this is \\( T = 85 - 4.5m \\). In this equation, the 85 represents the [DROP], and the -4.5 represents the [DROP].", 
+        options: [["x-intercept", "y-intercept", "slope"], ["x-intercept", "y-intercept", "slope"]], 
+        correctIndices: [1, 2], 
+        hint: "The starting amount (when m = 0) is the y-intercept. The rate of change is the slope.", 
+        desmosHint: "", 
+        explanation: "85 is the starting temperature (y-intercept). -4.5 is the rate at which the temperature changes over time (slope)." 
+    },
+    { 
+        domain: "Statistics", 
+        difficulty: "Medium", 
+        type: "dropdown", 
+        std: "S-ID.5", 
+        text: "A high school surveyed 200 seniors about their post-graduation plans. The results are in the table below:<br><br><table style='width:100%; text-align:center; border-collapse: collapse; margin-top: 10px;' border='1'><tr><th style='padding: 5px; background: #f1f5f9;'></th><th style='padding: 5px; background: #f1f5f9;'>College</th><th style='padding: 5px; background: #f1f5f9;'>Workforce</th><th style='padding: 5px; background: #f1f5f9;'>Total</th></tr><tr><td><b>Varsity Athlete</b></td><td>40</td><td>10</td><td><b>50</b></td></tr><tr><td><b>Non-Athlete</b></td><td>90</td><td>60</td><td><b>150</b></td></tr><tr><td><b>Total</b></td><td><b>130</b></td><td><b>70</b></td><td><b>200</b></td></tr></table><br>Based on the table, the marginal relative frequency of a student entering the workforce is [DROP]. The joint relative frequency of being a varsity athlete going to college is [DROP].", 
+        options: [["70 / 200", "60 / 150", "130 / 200"], ["40 / 50", "40 / 130", "40 / 200"]], 
+        correctIndices: [0, 2], 
+        hint: "Marginal uses the total from the bottom/side margins over the grand total. Joint uses the inside intersection cells over the grand total.", 
+        desmosHint: "", 
+        explanation: "Marginal (Workforce): Total workforce is 70, grand total is 200. Joint (Athlete + College): Intersection is 40, grand total is 200." 
+    },
+    { 
+        domain: "Functions", 
+        difficulty: "Hard", 
+        type: "msq", 
+        std: "F-LE.2", 
+        text: "A software company launched a new app on January 1st. In its first month, it had 10,000 active users. Because of a viral marketing campaign, the number of users doubled every 3 months. Which function best models the number of users, \\( U \\), after \\( m \\) months?", 
+        options: [
+            "\\( U(m) = 10000(2)^m \\)", 
+            "\\( U(m) = 10000(2)^{3m} \\)", 
+            "\\( U(m) = 10000(2)^{m/3} \\)", 
+            "\\( U(m) = 30000(2)^m \\)"
+        ], 
+        correctIndices: [2], 
+        hint: "If it doubles every 3 months, then when m=3, the exponent should equal exactly 1 (meaning it doubled one time). Which equation makes that happen?", 
+        desmosHint: "**Desmos EOC Trick:** Add a table. Put (0, 10000) and (3, 20000) into the table. Graph the answer choices until one perfectly hits both dots!", 
+        explanation: "To make the doubling occur every 3 months, the time variable must be divided by 3. If you plug in 3 for \\( m \\) in option C, you get \\( 10000(2)^1 \\), which correctly doubles the users to 20,000." 
+    }
   
    
 ];
