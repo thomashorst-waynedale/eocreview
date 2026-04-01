@@ -345,6 +345,291 @@ const questionBank = [
         hint: "If it doubles every 3 months, then when m=3, the exponent should equal exactly 1 (meaning it doubled one time). Which equation makes that happen?", 
         desmosHint: "**Desmos EOC Trick:** Add a table. Put (0, 10000) and (3, 20000) into the table. Graph the answer choices until one perfectly hits both dots!", 
         explanation: "To make the doubling occur every 3 months, the time variable must be divided by 3. If you plug in 3 for \\( m \\) in option C, you get \\( 10000(2)^1 \\), which correctly doubles the users to 20,000." 
+    },
+    // --- TRANSFORMATIONS OF FUNCTIONS ---
+    { 
+        domain: "Functions", 
+        difficulty: "Medium", 
+        type: "dropdown", 
+        std: "F-BF.3", 
+        text: "The parent function \\( f(x) = x^2 \\) is transformed to create \\( g(x) = -(x + 3)^2 - 4 \\). The graph of \\( g(x) \\) is reflected across the [DROP]-axis, shifted 3 units [DROP], and shifted 4 units [DROP].", 
+        options: [["x", "y"], ["left", "right"], ["up", "down"]], 
+        correctIndices: [0, 0, 1], 
+        hint: "A negative in front flips it upside down. Inside parentheses is horizontal (opposite of what you expect). Outside is vertical.", 
+        desmosHint: "**Desmos EOC Trick:** Graph `y = x^2` on line 1 and the new equation on line 2. Visually watch how the U-shape flips and moves!", 
+        explanation: "The negative sign causes a reflection across the x-axis. \\( (x+3) \\) moves the graph left 3, and \\( -4 \\) moves it down 4." 
+    },
+    { 
+        domain: "Functions", 
+        difficulty: "Easy", 
+        type: "msq", 
+        std: "F-BF.3", 
+        text: "If \\( f(x) = 2^x \\), what is the effect on the graph if the equation is changed to \\( g(x) = 2^x + 5 \\)?", 
+        options: [
+            "The graph shifts 5 units to the right.", 
+            "The graph shifts 5 units to the left.", 
+            "The graph shifts 5 units up.", 
+            "The graph gets steeper by a factor of 5."
+        ], 
+        correctIndices: [2], 
+        hint: "Is the +5 inside with the x, or added to the very end of the whole function?", 
+        desmosHint: "**Desmos EOC Trick:** Graph both and look at the y-intercept. It moved from 1 to 6.", 
+        explanation: "Adding a constant to the end of a function, \\( f(x) + k \\), results in a vertical shift upwards by \\( k \\) units." 
+    },
+    { 
+        domain: "Functions", 
+        difficulty: "Hard", 
+        type: "sata", 
+        std: "F-BF.3", 
+        text: "Which transformations map the parent graph \\( y = |x| \\) to the new graph \\( y = 3|x - 2| \\)? (Select all that apply)", 
+        options: [
+            "Vertical stretch by a factor of 3", 
+            "Vertical compression (shrink) by a factor of 1/3", 
+            "Shift right by 2 units", 
+            "Shift left by 2 units", 
+            "Shift down by 2 units"
+        ], 
+        correctIndices: [0, 2], 
+        hint: "A number multiplying the front makes it taller/skinnier. A number subtracted inside the absolute value bars moves it horizontally.", 
+        desmosHint: "**Desmos EOC Trick:** Graph both and inspect the changes. The V-shape gets narrower (stretched) and the bottom point moves to (2,0).", 
+        explanation: "The coefficient 3 stretches the graph vertically, making it steeper. The \\( -2 \\) inside the absolute value shifts the vertex 2 units to the right." 
+    },
+
+    // --- SYSTEMS OF EQUATIONS & INEQUALITIES ---
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Medium", 
+        type: "text", 
+        std: "A-REI.6", 
+        text: "Solve the system of equations. What is the value of x? <br><br>\\( y = 3x - 2 \\)<br>\\( 2x + y = 13 \\)", 
+        correctText: "3", 
+        hint: "Use substitution. Since y equals (3x - 2), replace the y in the second equation with (3x - 2).", 
+        desmosHint: "**Desmos EOC Trick:** Type both equations into Desmos exactly as they appear. Click the intersection point to find the (x, y) coordinate.", 
+        explanation: "\\( 2x + (3x - 2) = 13 \\). Combine like terms: \\( 5x - 2 = 13 \\). Add 2: \\( 5x = 15 \\). Divide by 5: \\( x = 3 \\)." 
+    },
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Medium", 
+        type: "dropdown", 
+        std: "A-CED.3", 
+        text: "A farmer looks into a pen containing chickens (\\( c \\)) and pigs (\\( p \\)). He counts a total of 40 heads and 100 legs. The system of equations is \\( c + p = 40 \\) and [DROP]c + [DROP]p = 100.", 
+        options: [["1", "2", "4"], ["1", "2", "4"]], 
+        correctIndices: [1, 2], 
+        hint: "How many legs does a chicken have? How many does a pig have?", 
+        desmosHint: "", 
+        explanation: "Chickens have 2 legs, so their contribution is \\( 2c \\). Pigs have 4 legs, so their contribution is \\( 4p \\)." 
+    },
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Hard", 
+        type: "sata", 
+        std: "A-REI.12", 
+        text: "Which of the following coordinate points are in the solution set of the system of inequalities?<br><br>\\( y > x \\)<br>\\( y \\le -x + 4 \\)", 
+        options: ["(1, 2)", "(0, 0)", "(0, 2)", "(3, 5)", "(-1, 5)"], 
+        correctIndices: [0, 2, 4], 
+        hint: "A point must satisfy BOTH inequalities. Plug the x and y values in and check.", 
+        desmosHint: "**Desmos EOC Trick:** Graph both inequalities. Plot all 5 points. Select the dots that land in the darkest 'double-shaded' region, or directly on a solid (not dashed) boundary line of that region.", 
+        explanation: "Testing (1,2): \\( 2 > 1 \\) (True) and \\( 2 \\le 3 \\) (True). Testing (0,2): \\( 2 > 0 \\) (True) and \\( 2 \\le 4 \\) (True). Testing (-1,5): \\( 5 > -1 \\) (True) and \\( 5 \\le 5 \\) (True)." 
+    },
+
+    // --- SEQUENCES ---
+    { 
+        domain: "Functions", 
+        difficulty: "Easy", 
+        type: "dropdown", 
+        std: "F-LE.2", 
+        text: "The sequence 5, 10, 20, 40... is an [DROP] sequence because it has a common [DROP] of 2.", 
+        options: [["arithmetic", "geometric"], ["difference", "ratio"]], 
+        correctIndices: [1, 1], 
+        hint: "Are the numbers growing by adding the same amount, or multiplying by the same amount?", 
+        desmosHint: "", 
+        explanation: "Because each term is multiplied by 2 to get the next term, it is geometric, and the multiplier is called a common ratio." 
+    },
+    { 
+        domain: "Functions", 
+        difficulty: "Medium", 
+        type: "text", 
+        std: "F-IF.3", 
+        text: "A recursive sequence is defined by \\( a_1 = 7 \\) and \\( a_n = a_{n-1} - 3 \\). What is the value of the 4th term (\\( a_4 \\))?", 
+        correctText: "-2", 
+        hint: "This formula just means 'Start at 7, and subtract 3 each time'. Find the 2nd, 3rd, and 4th terms.", 
+        desmosHint: "", 
+        explanation: "Term 1 is 7. Term 2 is \\( 7 - 3 = 4 \\). Term 3 is \\( 4 - 3 = 1 \\). Term 4 is \\( 1 - 3 = -2 \\)." 
+    },
+    { 
+        domain: "Functions", 
+        difficulty: "Medium", 
+        type: "msq", 
+        std: "F-LE.2", 
+        text: "A biologist observes a cell culture that starts with 50 cells. The number of cells triples every hour. Which explicit function models the number of cells, \\( C \\), after \\( t \\) hours?", 
+        options: [
+            "\\( C(t) = 3(50)^t \\)", 
+            "\\( C(t) = 50 + 3t \\)", 
+            "\\( C(t) = 50(3)^t \\)", 
+            "\\( C(t) = 150^t \\)"
+        ], 
+        correctIndices: [2], 
+        hint: "Exponential format is \\( y = a(b)^x \\), where 'a' is the starting amount and 'b' is the growth multiplier.", 
+        desmosHint: "**Desmos EOC Trick:** Add a table. Put (0, 50) and (1, 150). Graph the answer choices to see which curve perfectly hits both points.", 
+        explanation: "The initial value is 50, which goes in the front. Tripling means multiplying by 3 repeatedly, so 3 is the base of the exponent." 
+    },
+
+    // --- LITERAL EQUATIONS ---
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Hard", 
+        type: "dropdown", 
+        std: "A-CED.4", 
+        text: "To solve the area of a trapezoid formula, \\( A = \\frac{1}{2}h(b_1 + b_2) \\), for the base \\( b_1 \\): First multiply both sides by [DROP], then divide by [DROP], and finally subtract [DROP].", 
+        options: [["2", "1/2"], ["h", "A"], ["b_1", "b_2"]], 
+        correctIndices: [0, 0, 2], 
+        hint: "Peel the layers away from \\( b_1 \\). Clear the fraction first, then move the variable attached to the parentheses.", 
+        desmosHint: "", 
+        explanation: "Multiply by 2 to clear the fraction: \\( 2A = h(b_1 + b_2) \\). Divide by \\( h \\): \\( \\frac{2A}{h} = b_1 + b_2 \\). Subtract \\( b_2 \\): \\( b_1 = \\frac{2A}{h} - b_2 \\)." 
+    },
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Hard", 
+        type: "msq", 
+        std: "A-CED.4", 
+        text: "The formula to convert Celsius to Fahrenheit is \\( F = \\frac{9}{5}C + 32 \\). Which equation correctly solves for Celsius (\\( C \\))?", 
+        options: [
+            "\\( C = \\frac{5}{9}F - 32 \\)", 
+            "\\( C = \\frac{5}{9}(F - 32) \\)", 
+            "\\( C = \\frac{9}{5}(F - 32) \\)", 
+            "\\( C = F - 32 - \\frac{5}{9} \\)"
+        ], 
+        correctIndices: [1], 
+        hint: "Subtract 32 first. Then multiply by the reciprocal of the fraction.", 
+        desmosHint: "", 
+        explanation: "Subtract 32: \\( F - 32 = \\frac{9}{5}C \\). To isolate C, multiply the ENTIRE left side by the reciprocal, \\( \\frac{5}{9} \\). This requires parentheses: \\( \\frac{5}{9}(F - 32) = C \\)." 
+    },
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Medium", 
+        type: "text", 
+        std: "A-REI.10", 
+        text: "If the equation of a line is \\( 3x - 4y = 12 \\), what is the y-intercept? (Type number only)", 
+        correctText: "-3", 
+        hint: "The y-intercept occurs when x = 0. Plug in 0 for x and solve for y.", 
+        desmosHint: "**Desmos EOC Trick:** Type the equation exactly as written. Click where the line crosses the vertical y-axis.", 
+        explanation: "If \\( x = 0 \\), the term \\( 3x \\) disappears. You are left with \\( -4y = 12 \\). Dividing by -4 gives \\( y = -3 \\)." 
+    },
+
+    // --- RATIONAL & IRRATIONAL NUMBERS ---
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Medium", 
+        type: "sata", 
+        std: "N-RN.3", 
+        text: "Which of the following values are irrational? (Select all that apply)", 
+        options: [
+            "\\( \\sqrt{16} \\)", 
+            "\\( \\sqrt{20} \\)", 
+            "\\( \\pi \\)", 
+            "\\( 3.14 \\)", 
+            "\\( \\frac{1}{3} \\)"
+        ], 
+        correctIndices: [1, 2], 
+        hint: "Rational numbers can be written as fractions, perfect decimals, or perfect squares. Irrational numbers are messy, non-repeating decimals.", 
+        desmosHint: "**Desmos EOC Trick:** Type each option into Desmos. If it outputs a long decimal that doesn't have a repeating pattern, it's irrational.", 
+        explanation: "\\( \\sqrt{16} = 4 \\) (rational). \\( 3.14 \\) and 1/3 are rational. \\( \\sqrt{20} \\) and \\( \\pi \\) are non-terminating, non-repeating decimals." 
+    },
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Medium", 
+        type: "dropdown", 
+        std: "N-RN.3", 
+        text: "The product of \\( \\sqrt{2} \\) and \\( \\sqrt{8} \\) is [DROP] because it simplifies to exactly [DROP], which is a [DROP] number.", 
+        options: [["\\sqrt{10}", "\\sqrt{16}", "10"], ["4", "8", "16"], ["rational", "irrational"]], 
+        correctIndices: [1, 0, 0], 
+        hint: "Multiply the numbers under the radicals first. Then take the square root of the result.", 
+        desmosHint: "**Desmos EOC Trick:** Type `\\sqrt{2} * \\sqrt{8}` into Desmos. It will output a perfectly clean whole number!", 
+        explanation: "\\( \\sqrt{2} \\times \\sqrt{8} = \\sqrt{16} \\). Since the square root of 16 is exactly 4, the result is a rational number." 
+    },
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Hard", 
+        type: "msq", 
+        std: "N-RN.3", 
+        text: "Which of the following statements is ALWAYS true?", 
+        options: [
+            "The sum of two irrational numbers is always irrational.", 
+            "The product of two irrational numbers is always irrational.", 
+            "The sum of a rational and an irrational number is always irrational.", 
+            "The product of two rational numbers is always irrational."
+        ], 
+        correctIndices: [2], 
+        hint: "Think of exceptions. What happens if you multiply \\( \\sqrt{2} \\times \\sqrt{2} \\)? What happens if you add \\( \\sqrt{2} \\) and \\( -\\sqrt{2} \\)?", 
+        desmosHint: "", 
+        explanation: "Two irrationals can multiply or add to create a rational number. However, a clean rational number combined with a messy irrational number will ALWAYS result in a messy irrational number." 
+    },
+
+    // --- ERROR ANALYSIS ---
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Medium", 
+        type: "dropdown", 
+        std: "A-REI.1", 
+        text: "A student solves an equation.<br><b>Step 1:</b> \\( 3(x - 2) = 12 \\)<br><b>Step 2:</b> \\( 3x - 2 = 12 \\)<br><b>Step 3:</b> \\( 3x = 14 \\)<br><b>Step 4:</b> \\( x = 14/3 \\)<br><br>The first mathematical error occurred in Step [DROP] because the student failed to [DROP] the 3 to the -2.", 
+        options: [["1", "2", "3", "4"], ["add", "subtract", "distribute"]], 
+        correctIndices: [1, 2], 
+        hint: "Look closely at the transition from Step 1 to Step 2. What rule of algebra was broken?", 
+        desmosHint: "", 
+        explanation: "In Step 2, the student multiplied the 3 by the x, but forgot to distribute the 3 to the -2. It should have been \\( 3x - 6 = 12 \\)." 
+    },
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Medium", 
+        type: "msq", 
+        std: "A-REI.1", 
+        text: "A student solves the equation \\( x^2 = 36 \\) and determines the only solution is \\( x = 6 \\). What error did the student make?", 
+        options: [
+            "They should have divided 36 by 2.", 
+            "They forgot to apply the positive and negative square root property.", 
+            "They should have factored the equation first.", 
+            "They did not make an error; 6 is the only solution."
+        ], 
+        correctIndices: [1], 
+        hint: "What happens if you square a negative number? \\( (-6) \\times (-6) = ? \\)", 
+        desmosHint: "**Desmos EOC Trick:** Graph `y = x^2 - 36`. It hits the x-axis in TWO places, meaning there are two valid solutions.", 
+        explanation: "When introducing a square root to solve an equation, you must account for both the positive and negative roots. The solutions are \\( x = 6 \\) and \\( x = -6 \\)." 
+    },
+
+    // --- DOMAIN & RANGE IN CONTEXT ---
+    { 
+        domain: "Functions", 
+        difficulty: "Medium", 
+        type: "msq", 
+        std: "F-IF.5", 
+        text: "A delivery driver earns $15 per hour and can work a maximum of 8 hours a day. The function \\( E(h) = 15h \\) models his daily earnings. What is the most appropriate domain for this situation?", 
+        options: [
+            "All real numbers", 
+            "\\( h \\ge 0 \\)", 
+            "\\( 0 \\le h \\le 8 \\)", 
+            "\\( 0 \\le E \\le 120 \\)"
+        ], 
+        correctIndices: [2], 
+        hint: "Domain refers to the input variable (hours). What is the minimum and maximum amount of hours he can realistically work?", 
+        desmosHint: "", 
+        explanation: "The input variable is \\( h \\) (hours). He cannot work negative hours, and he is capped at 8 hours. Therefore, the domain is between 0 and 8 inclusive." 
+    },
+    { 
+        domain: "Functions", 
+        difficulty: "Hard", 
+        type: "sata", 
+        std: "F-IF.5", 
+        text: "A school vending machine holds exactly 50 snacks. You buy \\( s \\) snacks for $1.50 each. The function \\( R(s) = 50 - s \\) represents the number of snacks remaining in the machine. Which of the following must be true about the domain of this function? (Select all that apply)", 
+        options: [
+            "The domain values cannot be negative.", 
+            "The domain can include decimals.", 
+            "The domain must be whole integers.", 
+            "The maximum value in the domain is 50."
+        ], 
+        correctIndices: [0, 2, 3], 
+        hint: "Domain is the input (snacks purchased). Think logically: Can you buy a negative snack? Can you buy half a snack? Can you buy 51 snacks?", 
+        desmosHint: "", 
+        explanation: "You cannot buy negative snacks. You cannot buy fractional snacks (must be integers). You cannot buy more snacks than the machine holds, so the maximum domain value is 50." 
     }
   
    
