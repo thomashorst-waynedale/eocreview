@@ -482,7 +482,7 @@ const questionBank = [
         std: "A-CED.4", 
         text: "To solve the area of a trapezoid formula, \\( A = \\frac{1}{2}h(b_1 + b_2) \\), for the base \\( b_1 \\): First multiply both sides by [DROP], then divide by [DROP], and finally subtract [DROP].", 
         options: [["2", "1/2"], ["h", "A"], ["b_1", "b_2"]], 
-        correctIndices: [0, 0, 2], 
+        correctIndices: [0, 0, 1], 
         hint: "Peel the layers away from \\( b_1 \\). Clear the fraction first, then move the variable attached to the parentheses.", 
         desmosHint: "", 
         explanation: "Multiply by 2 to clear the fraction: \\( 2A = h(b_1 + b_2) \\). Divide by \\( h \\): \\( \\frac{2A}{h} = b_1 + b_2 \\). Subtract \\( b_2 \\): \\( b_1 = \\frac{2A}{h} - b_2 \\)." 
