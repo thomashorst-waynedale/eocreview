@@ -619,6 +619,157 @@ const questionBank = [
         hint: "Domain is the input (snacks purchased). Think logically: Can you buy a negative snack? Can you buy half a snack? Can you buy 51 snacks?", 
         desmosHint: "", 
         explanation: "You cannot buy negative snacks. You cannot buy fractional snacks (must be integers). You cannot buy more snacks than the machine holds, so the maximum domain value is 50." 
+    },
+    // --- AVERAGE RATE OF CHANGE (AROC) ---
+    { 
+        domain: "Functions", 
+        difficulty: "Medium", 
+        type: "msq", 
+        std: "F-IF.6", 
+        text: "What is the average rate of change of the function \\( f(x) = x^2 - 2x \\) over the interval \\( [1, 4] \\)?", 
+        options: ["2", "3", "8", "9"], 
+        correctIndices: [1], 
+        hint: "Average rate of change is just the slope formula: \\( \\frac{f(x_2) - f(x_1)}{x_2 - x_1} \\). First, plug in 4 to get your y2. Then plug in 1 to get your y1.", 
+        desmosHint: "**Desmos EOC Trick:** Type `f(x) = x^2 - 2x` on line 1. On line 2, type `(f(4) - f(1)) / (4 - 1)` and Desmos will calculate the slope for you!", 
+        explanation: "\\( f(4) = (4)^2 - 2(4) = 16 - 8 = 8 \\). \\( f(1) = (1)^2 - 2(1) = 1 - 2 = -1 \\). Slope = \\( \\frac{8 - (-1)}{4 - 1} = \\frac{9}{3} = 3 \\)." 
+    },
+    { 
+        domain: "Functions", 
+        difficulty: "Hard", 
+        type: "dropdown", 
+        std: "F-IF.6", 
+        text: "A bacteria population is modeled by \\( P(t) = 100(2)^t \\). From hour \\( t=0 \\) to hour \\( t=2 \\), the average rate of change is [DROP] bacteria per hour. This means the population is growing [DROP] than it would from hour 2 to hour 4.", 
+        options: [["100", "150", "300", "400"], ["faster", "slower"]], 
+        correctIndices: [1, 1], 
+        hint: "Find the population at t=2 and t=0. Subtract them, then divide by the 2 hours that passed.", 
+        desmosHint: "**Desmos EOC Trick:** Use the same trick: `P(t) = 100(2)^t`, then evaluate `(P(2) - P(0)) / (2 - 0)`.", 
+        explanation: "\\( P(2) = 100(4) = 400 \\). \\( P(0) = 100(1) = 100 \\). Rate = \\( \\frac{400 - 100}{2 - 0} = \\frac{300}{2} = 150 \\). Exponential functions grow faster as time goes on, so the early hours are slower." 
+    },
+
+    // --- POLYNOMIAL OPERATIONS ---
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Easy", 
+        type: "msq", 
+        std: "A-APR.1", 
+        text: "Which expression is equivalent to \\( (3x^2 + 5x - 2) - (x^2 - 2x + 4) \\)?", 
+        options: [
+            "\\( 2x^2 + 3x + 2 \\)", 
+            "\\( 2x^2 + 7x - 6 \\)", 
+            "\\( 4x^2 + 3x + 2 \\)", 
+            "\\( 4x^2 + 7x - 6 \\)"
+        ], 
+        correctIndices: [1], 
+        hint: "Distribute the negative sign to EVERY term in the second set of parentheses before combining like terms.", 
+        desmosHint: "**Desmos EOC Trick:** Overlapping graphs! Graph the original expression. Then graph the answer choices until one perfectly covers the first graph.", 
+        explanation: "Distributing the negative gives: \\( 3x^2 + 5x - 2 - x^2 + 2x - 4 \\). Combining terms: \\( (3x^2 - x^2) + (5x + 2x) + (-2 - 4) = 2x^2 + 7x - 6 \\)." 
+    },
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Medium", 
+        type: "dropdown", 
+        std: "A-APR.1", 
+        text: "When multiplying the binomials \\( (2x - 3) \\) and \\( (x + 5) \\), the quadratic term is [DROP], the linear term is [DROP], and the constant term is [DROP].", 
+        options: [["2x^2", "3x^2"], ["-3x", "7x", "10x"], ["-15", "2"]], 
+        correctIndices: [0, 1, 0], 
+        hint: "Use FOIL or the Box Method. The 'linear term' is what you get when you combine the middle 'x' terms.", 
+        desmosHint: "", 
+        explanation: "Multiply: \\( (2x)(x) = 2x^2 \\). Outside: \\( 10x \\). Inside: \\( -3x \\). Last: \\( -15 \\). Combine the middle linear terms: \\( 10x - 3x = 7x \\)." 
+    },
+
+    // --- PIECEWISE FUNCTIONS ---
+    { 
+        domain: "Functions", 
+        difficulty: "Medium", 
+        type: "dropdown", 
+        std: "F-IF.2", 
+        text: "Given the piecewise function:<br>\\( f(x) = 3x \\) if \\( x < 0 \\)<br>\\( f(x) = x + 5 \\) if \\( x \\ge 0 \\)<br><br>The value of \\( f(-2) \\) is [DROP] and the value of \\( f(4) \\) is [DROP].", 
+        options: [["-6", "3", "4"], ["-1", "9", "12"]], 
+        correctIndices: [0, 1], 
+        hint: "Look at the input number. Which condition does it meet? Only plug it into that specific equation.", 
+        desmosHint: "", 
+        explanation: "Because -2 is less than 0, use the top equation: \\( 3(-2) = -6 \\). Because 4 is greater than 0, use the bottom equation: \\( 4 + 5 = 9 \\)." 
+    },
+    { 
+        domain: "Functions", 
+        difficulty: "Hard", 
+        type: "msq", 
+        std: "F-IF.4", 
+        text: "A parking garage charges $5 for the first hour and $2 for each additional hour, up to a maximum of $15 per day. Which type of graph best models this situation?", 
+        options: [
+            "A straight continuous line", 
+            "An exponential curve", 
+            "A piecewise step function", 
+            "A quadratic parabola"
+        ], 
+        correctIndices: [2], 
+        hint: "Does the price gradually flow up smoothly, or does it jump in chunks every time an hour passes?", 
+        desmosHint: "", 
+        explanation: "Because the price stays flat for an hour and then suddenly jumps up $2, it forms horizontal 'steps'. Also, it caps at $15, changing the rule again. This is a piecewise step function." 
+    },
+
+    // --- FEATURES OF GRAPHS ---
+    { 
+        domain: "Functions", 
+        difficulty: "Hard", 
+        type: "sata", 
+        std: "F-IF.4", 
+        text: "Select all TRUE statements about the quadratic function \\( y = (x - 2)^2 - 9 \\).", 
+        options: [
+            "The function is decreasing on the interval \\( (-\\infty, 2) \\).", 
+            "The function is increasing on the interval \\( (-\\infty, 2) \\).", 
+            "The minimum value of the function is -9.", 
+            "The function has an x-intercept at \\( x = 2 \\).", 
+            "The vertex is in the 4th quadrant."
+        ], 
+        correctIndices: [0, 2, 4], 
+        hint: "The vertex is (2, -9). Because 'a' is positive, the parabola is U-shaped (opens up).", 
+        desmosHint: "**Desmos EOC Trick:** Graph it! Look at the left side of the U—it is going down until x=2. The vertex is at (2, -9), which is bottom-right (4th quadrant).", 
+        explanation: "The vertex is (2, -9), which is the minimum value (4th quadrant). The graph goes down (decreases) until it hits x=2, then goes up. The x-intercepts are actually at 5 and -1." 
+    },
+    { 
+        domain: "Functions", 
+        difficulty: "Medium", 
+        type: "dropdown", 
+        std: "F-IF.4", 
+        text: "For the exponential growth function \\( f(x) = 3^x \\): As \\( x \\to \\infty \\), \\( f(x) \\to \\) [DROP]. As \\( x \\to -\\infty \\), \\( f(x) \\to \\) [DROP].", 
+        options: [["0", "\\infty", "-\infty"], ["0", "\\infty", "-\infty"]], 
+        correctIndices: [1, 0], 
+        hint: "End behavior asks: What happens to the line as you look really far to the right (positive infinity) and really far to the left (negative infinity)?", 
+        desmosHint: "**Desmos EOC Trick:** Graph it and zoom way out! Look right: it shoots to the sky. Look left: it flattens out perfectly on the zero line.", 
+        explanation: "As x gets huge, \\( 3^x \\) explodes toward infinity. As x gets super negative (like \\( 3^{-100} \\)), it turns into a tiny fraction approaching 0, creating a horizontal asymptote." 
+    },
+
+    // --- EQUATION BUILDING & MATRICES ---
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Hard", 
+        type: "dropdown", 
+        std: "A-REI.4a", 
+        text: "To solve \\( x^2 + 8x - 5 = 0 \\) by completing the square, you must first move the 5 to the other side. Then, you add [DROP] to both sides to complete the square, resulting in the factored equation \\( (x + [DROP])^2 = 21 \\).", 
+        options: [["4", "8", "16"], ["4", "8", "16"]], 
+        correctIndices: [2, 0], 
+        hint: "The magic number to complete the square is \\( (b/2)^2 \\). Here, b is 8.", 
+        desmosHint: "", 
+        explanation: "Half of 8 is 4. Four squared is 16. You add 16 to both sides: \\( x^2 + 8x + 16 = 5 + 16 \\). The left side factors perfectly into \\( (x + 4)^2 \\)." 
+    },
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Medium", 
+        type: "sata", 
+        std: "A-REI.10", 
+        text: "Select ALL statements that are TRUE about the linear equation \\( 4x - 2y = 8 \\).", 
+        options: [
+            "The y-intercept is -4.", 
+            "The x-intercept is 2.", 
+            "The slope of the line is 2.", 
+            "The point (3, 2) lies on the line.", 
+            "The line goes down from left to right."
+        ], 
+        correctIndices: [0, 1, 2, 3], 
+        hint: "Convert it to slope-intercept form first: solve for y.", 
+        desmosHint: "**Desmos EOC Trick:** Type the equation exactly as is. Click the intercepts. Click the line to trace it to (3,2). Does it go up or down?", 
+        explanation: "Solving for y: \\( -2y = -4x + 8 \\) -> \\( y = 2x - 4 \\). Slope is 2 (goes UP from left to right). y-intercept is -4. Plugging in y=0 gives 4x=8, so x-intercept is 2. Plugging in (3,2) gives \\( 12 - 4 = 8 \\) (True)." 
     }
   
    
