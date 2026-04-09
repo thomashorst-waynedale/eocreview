@@ -770,6 +770,160 @@ const questionBank = [
         hint: "Convert it to slope-intercept form first: solve for y.", 
         desmosHint: "**Desmos EOC Trick:** Type the equation exactly as is. Click the intercepts. Click the line to trace it to (3,2). Does it go up or down?", 
         explanation: "Solving for y: \\( -2y = -4x + 8 \\) -> \\( y = 2x - 4 \\). Slope is 2 (goes UP from left to right). y-intercept is -4. Plugging in y=0 gives 4x=8, so x-intercept is 2. Plugging in (3,2) gives \\( 12 - 4 = 8 \\) (True)." 
+    },
+    // --- COMPARING FUNCTIONS (Different Formats) ---
+    { 
+        domain: "Functions", 
+        difficulty: "Medium", 
+        type: "msq", 
+        std: "F-IF.9", 
+        text: "Function A is represented by the equation \\( y = 3x - 5 \\). Function B is a line that passes through the points (0, -2) and (2, 6). Which statement is true?", 
+        options: [
+            "Function A has a greater slope and a greater y-intercept.", 
+            "Function B has a greater slope and a greater y-intercept.", 
+            "Function A has a greater slope, but Function B has a greater y-intercept.", 
+            "Function B has a greater slope, but Function A has a greater y-intercept."
+        ], 
+        correctIndices: [1], 
+        hint: "Find the slope and y-intercept for both. Function A has m=3, b=-5. Use the slope formula for Function B.", 
+        desmosHint: "**Desmos EOC Trick:** Graph Function A. Then add a table for Function B's points. You can visually see which line is steeper (slope) and which crosses the y-axis higher up!", 
+        explanation: "Function A: slope = 3, y-int = -5. Function B slope: \\( (6 - (-2)) / (2 - 0) = 8 / 2 = 4 \\). Function B y-int = -2 (from the point 0, -2). Function B wins both: 4 > 3, and -2 > -5." 
+    },
+    { 
+        domain: "Functions", 
+        difficulty: "Hard", 
+        type: "dropdown", 
+        std: "F-IF.9", 
+        text: "Quadratic Function 1 is given by \\( f(x) = (x - 4)^2 + 2 \\). Quadratic Function 2 is represented by a table with a vertex at (3, 5) opening downward. Function [DROP] has a lower minimum/maximum value because its turning point is at a y-value of [DROP].", 
+        options: [["1", "2"], ["2", "4", "5"]], 
+        correctIndices: [0, 0], 
+        hint: "Function 1 opens upward and its vertex is (4, 2). Function 2 opens downward with a peak at y=5.", 
+        desmosHint: "", 
+        explanation: "Function 1 has a minimum at y = 2. Function 2 has a maximum at y = 5. Therefore, Function 1 has the lower extreme value (2 is less than 5)." 
+    },
+
+    // --- RATIONAL EXPONENTS & RADICALS ---
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Medium", 
+        type: "msq", 
+        std: "N-RN.1", 
+        text: "Which expression is equivalent to \\( x^{5/3} \\)?", 
+        options: [
+            "\\( \\sqrt[5]{x^3} \\)", 
+            "\\( \\sqrt[3]{x^5} \\)", 
+            "\\( \\frac{1}{x^{15}} \\)", 
+            "\\( 3x^5 \\)"
+        ], 
+        correctIndices: [1], 
+        hint: "Remember the rule: 'Power over Root' or 'The rider stays inside, the horse goes outside.'", 
+        desmosHint: "**Desmos EOC Trick:** Test it! Make x=4. Type `4^(5/3)`. Then test the answer choices by typing `\\sqrt[3]{4^5}` and see which decimal matches perfectly.", 
+        explanation: "In a fractional exponent, the top number (numerator) is the power, and the bottom number (denominator) is the root index. So 5 is the power, 3 is the root." 
+    },
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Hard", 
+        type: "dropdown", 
+        std: "N-RN.2", 
+        text: "To simplify the expression \\( (16x^8)^{1/4} \\), you apply the 1/4 power to both terms. The 1/4 power is the same as taking the [DROP] root. The simplified expression is [DROP].", 
+        options: [["square", "cube", "fourth"], ["4x^2", "2x^2", "4x^4"]], 
+        correctIndices: [2, 1], 
+        hint: "What number multiplied by itself 4 times equals 16? For the exponent, multiply 8 by 1/4.", 
+        desmosHint: "**Desmos EOC Trick:** Type `16^(1/4)` to evaluate the number part instantly.", 
+        explanation: "The fourth root of 16 is 2 (because \\( 2 \\times 2 \\times 2 \\times 2 = 16 \\)). For the variable, multiply the exponents: \\( 8 \\times (1/4) = 2 \\). Result: \\( 2x^2 \\)." 
+    },
+
+    // --- SYSTEMS OF INEQUALITIES (CONSTRAINTS) ---
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Medium", 
+        type: "sata", 
+        std: "A-CED.3", 
+        text: "Marcus is buying hot dogs (\\( h \\)) and sodas (\\( s \\)) for his friends. Hot dogs cost $3 each and sodas cost $1.50 each. He has $20 to spend, but he needs to buy at least 8 items total. Which inequalities must be part of the system that models this scenario?", 
+        options: [
+            "\\( h + s \\ge 8 \\)", 
+            "\\( h + s \\le 8 \\)", 
+            "\\( 3h + 1.50s \\le 20 \\)", 
+            "\\( 3h + 1.50s \\ge 20 \\)", 
+            "\\( h \\ge 0 \\) and \\( s \\ge 0 \\)"
+        ], 
+        correctIndices: [0, 2, 4], 
+        hint: "Look at the totals. Items + Items must be AT LEAST 8. Money + Money must be LESS THAN OR EQUAL to his budget.", 
+        desmosHint: "", 
+        explanation: "He needs at least 8 items (\\( h + s \\ge 8 \\)). He cannot spend more than $20 (\\( 3h + 1.50s \\le 20 \\)). In reality, he cannot buy negative items, so \\( h \\ge 0 \\) and \\( s \\ge 0 \\) are required constraints." 
+    },
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Hard", 
+        type: "dropdown", 
+        std: "A-REI.12", 
+        text: "A factory produces chairs (\\( x \\)) and tables (\\( y \\)). The constraints are graphed as a system of inequalities forming a shaded region. The point (10, 5) is [DROP] the shaded region. This means producing 10 chairs and 5 tables is a [DROP] combination.", 
+        options: [["inside", "outside", "on the dashed line of"], ["viable (possible)", "non-viable (impossible)"]], 
+        correctIndices: [0, 0], 
+        hint: "If a point falls in the overlapping shaded area of an inequality graph, it represents a valid solution.", 
+        desmosHint: "", 
+        explanation: "Any coordinate point inside the overlapping shaded region of a system of inequalities represents a viable solution that satisfies all constraints simultaneously." 
+    },
+
+    // --- DISCRIMINANT & QUADRATIC FORMULA ---
+    { 
+        domain: "Functions", 
+        difficulty: "Medium", 
+        type: "msq", 
+        std: "A-REI.4b", 
+        text: "How many real solutions does the quadratic equation \\( x^2 + 2x + 5 = 0 \\) have?", 
+        options: [
+            "Two real solutions", 
+            "One real solution", 
+            "Zero real solutions", 
+            "Infinite real solutions"
+        ], 
+        correctIndices: [2], 
+        hint: "Calculate the discriminant: \\( b^2 - 4ac \\). If it's negative, you can't take the square root of it, meaning no real solutions.", 
+        desmosHint: "**Desmos EOC Trick:** Graph `y = x^2 + 2x + 5`. Notice that the parabola floats completely ABOVE the x-axis. Because it never crosses, there are zero real solutions!", 
+        explanation: "Using the discriminant: \\( (2)^2 - 4(1)(5) = 4 - 20 = -16 \\). You cannot take the square root of a negative number in the real number system, so there are no real solutions." 
+    },
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Hard", 
+        type: "dropdown", 
+        std: "A-REI.4b", 
+        text: "For the equation \\( x^2 - 6x + 9 = 0 \\), the discriminant (\\( b^2 - 4ac \\)) equals [DROP]. Because of this, the parabola will touch the x-axis exactly [DROP] time(s).", 
+        options: [["-36", "0", "72"], ["zero", "one", "two"]], 
+        correctIndices: [1, 1], 
+        hint: "Evaluate \\( (-6)^2 - 4(1)(9) \\).", 
+        desmosHint: "**Desmos EOC Trick:** Graph it! You will see the vertex rests perfectly on the x-axis at exactly one point.", 
+        explanation: "\\( 36 - 36 = 0 \\). When the discriminant is exactly 0, adding and subtracting 0 in the quadratic formula gives the exact same number, resulting in only 1 real root." 
+    },
+
+    // --- RANDOM MIXED REVIEW (State Test Surprises) ---
+    { 
+        domain: "Statistics", 
+        difficulty: "Medium", 
+        type: "text", 
+        std: "S-ID.3", 
+        text: "A data set contains the numbers: 10, 12, 15, 15, 18, 90. If the outlier (90) is removed from the data set, what is the new median? (Type number only)", 
+        correctText: "15", 
+        hint: "Write the numbers in order without the 90. 10, 12, 15, 15, 18. What is the exact middle number?", 
+        desmosHint: "**Desmos EOC Trick:** Type `median([10, 12, 15, 15, 18])` into the calculator.", 
+        explanation: "Without the 90, the set is 10, 12, 15, 15, 18. The number perfectly in the middle of these 5 values is 15." 
+    },
+    { 
+        domain: "Equations & Expressions", 
+        difficulty: "Hard", 
+        type: "msq", 
+        std: "A-SSE.2", 
+        text: "Which of the following is equivalent to the expression \\( x^4 - 16 \\)?", 
+        options: [
+            "\\( (x^2 - 4)(x^2 - 4) \\)", 
+            "\\( (x^2 + 4)(x - 2)(x + 2) \\)", 
+            "\\( (x - 2)^4 \\)", 
+            "\\( x^2(x^2 - 16) \\)"
+        ], 
+        correctIndices: [1], 
+        hint: "This is a difference of squares... twice! First, it breaks into \\( (x^2 + 4)(x^2 - 4) \\). Can either of those be broken down further?", 
+        desmosHint: "**Desmos EOC Trick:** Overlapping graphs! Graph `y = x^4 - 16`. Graph the answer choices until one covers it up perfectly.", 
+        explanation: "Difference of squares: \\( (x^2 + 4)(x^2 - 4) \\). The first part \\( (x^2 + 4) \\) is prime. However, the second part \\( (x^2 - 4) \\) is ANOTHER difference of squares, breaking into \\( (x - 2)(x + 2) \\)." 
     }
   
    
